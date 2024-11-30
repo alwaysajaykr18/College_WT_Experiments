@@ -1,1 +1,355 @@
+CALCULATER.HTML : 
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Scientific Calculator</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background-color: #1c1c1c;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .calculator {
+      background-color: #2c2c2c;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .display {
+      background-color: #3c3c3c;
+      padding: 10px;
+      margin-bottom: 10px;
+      text-align: right;
+      font-size: 36px;
+      border-radius: 5px;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-gap: 10px;
+    }
+
+    button {
+      background-color: #4c4c4c;
+      color: #fff;
+      padding: 10px;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #5c5c5c;
+    }
+
+    button.operator {
+      background-color: #ff8c00;
+    }
+
+    button.operator:hover {
+      background-color: #ffa500;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <div class="display">
+      <span id="display-value">0</span>
+    </div>
+    <div class="buttons">
+      <button onclick="clearDisplay()">AC</button>
+      <button onclick="handleOperation('/')">÷</button>
+      <button onclick="handleOperation('*')">×</button>
+      <button onclick="handleBackspace()">⌫</button>
+      <button onclick="handleOperation('^')">^</button>
+      <button onclick="handleNumber('7')">7</button>
+      <button onclick="handleNumber('8')">8</button>
+      <button onclick="handleNumber('9')">9</button>
+      <button onclick="handleOperation('-')" class="operator">-</button>
+      <button onclick="handleOperation('√')">√</button>
+      <button onclick="handleNumber('4')">4</button>
+      <button onclick="handleNumber('5')">5</button>
+      <button onclick="handleNumber('6')">6</button>
+      <button onclick="handleOperation('+')" class="operator">+</button>
+      <button onclick="handleOperation('log')">log</button>
+      <button onclick="handleNumber('1')">1</button>
+      <button onclick="handleNumber('2')">2</button>
+      <button onclick="handleNumber('3')">3</button>
+      <button onclick="handleEqual()" class="operator">=</button>
+      <button onclick="handleOperation('sin')">sin</button>
+      <button onclick="handleNumber('0')">0</button>
+      <button onclick="handleNumber('.')">.</button>
+      <button onclick="handleOperation('cos')">cos</button>
+      <button onclick="handleOperation('tan')">tan</button>
+      <button onclick="handleOperation('arcsin')">arcsin</button>
+      <button onclick="handleOperation('arccos')">arccos</button>
+      <button onclick="handleOperation('arctan')">arctan</button>
+      <button onclick="handleOperation('ln')">ln</button>
+      <button onclick="handleOperation('exp')">exp</button>
+      <button onclick="handleOperation('sinh')">sinh</button>
+      <button onclick="handleOperation('cosh')">cosh</button>
+      <button onclick="handleOperation('tanh')">tanh</button>
+      <button onclick="handleOperation('abs')">abs</button>
+      <button onclick="handleOperation('floor')">floor</button>
+      <button onclick="handleOperation('ceil')">ceil</button>
+      <button onclick="handleOperation('round')">round</button>
+      <button onclick="handleOperation('mod')">mod</button>
+      <button onclick="handleOperation('pi')">π</button>
+      <button onclick="handleOperation('e')">e</button>
+    </div>
+  </div>
+
+  <script>
+    let displayValue = '0';
+    let firstValue = null;
+    let operator = null;
+    let waitingForSecondValue = false;
+
+    function updateDisplay() {
+      document.getElementById('display-value').textContent = displayValue;
+    }
+
+    function clearDisplay() {
+      displayValue = '0';
+      firstValue = null;
+      operator = null;
+      waitingForSecondValue = false;
+      updateDisplay();
+    }
+
+    function handleNumber(number) {
+      if (waitingForSecondValue) {
+        displayValue = number;
+        waitingForSecondValue = false;
+      } else {
+        if (displayValue === '0') {
+          displayValue = number;
+        } else {
+          displayValue += number;
+        }
+      }
+      updateDisplay();
+    }
+
+    function handleBackspace() {
+      displayValue = displayValue.slice(0, -1);
+      if (displayValue === '') {
+        displayValue = '0';
+      }
+      updateDisplay();
+    }
+
+    function handleOperation(op) {
+      if (firstValue !== null && operator !== null) {
+        const result = performCalculation();
+        displayValue = result.toString();
+        firstValue = result;
+      } else {
+        firstValue = parseFloat(displayValue);
+      }
+      waitingForSecondValue = true;
+      operator = op;
+      updateDisplay();
+    }
+
+    function handleEqual() {
+      if (firstValue !== null && operator !== null) {
+        const result = performCalculation();
+        displayValue = result.toString();
+        firstValue = null;
+        operator = null;
+        updateDisplay();
+      }
+    }
+
+    function performCalculation() {
+      const secondValue = parseFloat(displayValue);
+      let result;
+      switch (operator) {
+        case '+':
+          result = firstValue + secondValue;
+          break;
+        case '-':
+          result = firstValue - secondValue;
+          break;
+        case '*':
+          result = firstValue * secondValue;
+          break;
+        case '/':
+          result = firstValue / secondValue;
+          break;
+        case '^':
+          result = Math.pow(firstValue, secondValue);
+          break;
+        case '√':
+          result = Math.sqrt(secondValue);
+          break;
+        case 'log':
+          result = Math.log10(secondValue);
+          break;
+        case 'sin':
+          result = Math.sin(secondValue * (Math.PI / 180));
+          break;
+        case 'cos':
+          result = Math.cos(secondValue * (Math.PI / 180));
+          break;
+        case 'tan':
+          result = Math.tan(secondValue * (Math.PI / 180));
+          break;
+        case 'arcsin':
+          result = Math.asin(secondValue) * (180 / Math.PI);
+          break;
+        case 'arccos':
+          result = Math.acos(secondValue) * (180 / Math.PI);
+          break;
+        case 'arctan':
+          result = Math.atan(secondValue) * (180 / Math.PI);
+          break;
+        case 'ln':
+          result = Math.log(secondValue);
+          break;
+        case 'exp':
+          result = Math.exp(secondValue);
+          break;
+        case 'sinh':
+          result = Math.sinh(secondValue);
+          break;
+        case 'cosh':
+          result = Math.cosh(secondValue);
+          break;
+        case 'tanh':
+          result = Math.tanh(secondValue);
+          break;
+        case 'abs':
+          result = Math.abs(secondValue);
+          break;
+        case 'floor':
+          result = Math.floor(secondValue);
+          break;
+        case 'ceil':
+          result = Math.ceil(secondValue);
+          break;
+        case 'round':
+          result = Math.round(secondValue);
+          break;
+        case 'mod':
+          result = firstValue % secondValue;
+          break;
+        case 'pi':
+          result = Math.PI;
+          break;
+        case 'e':
+          result = Math.E;
+          break;
+        default:
+          result = secondValue;
+      }
+      return result;
+    }
+  </script>
+</body>
+</html>
+
+OUTPUT : 
+
+SQUARES AND CUBES.HTML 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Squares and Cubes</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: Arial, sans-serif;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .square-icon {
+      color: #4CAF50;
+    }
+
+    .cube-icon {
+      color: #2196F3;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <h1>Squares and Cubes</h1>
+  <div id="result"></div>
+
+  <script>
+    // Function to compute the squares and cubes
+    function calculateSquaresAndCubes() {
+      let tableHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Number</th>
+              <th>Square</th>
+              <th>Cube</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      for (let i = 0; i <= 10; i++) {
+        const square = i * i;
+        const cube = i * i * i;
+        tableHTML += `
+          <tr>
+            <td>${i}</td>
+            <td>
+              <i class="fas fa-square square-icon"></i> ${square}
+            </td>
+            <td>
+              <i class="fas fa-cube cube-icon"></i> ${cube}
+            </td>
+          </tr>
+        `;
+      }
+
+      tableHTML += `
+          </tbody>
+        </table>
+      `;
+
+      // Display the table in the HTML
+      document.getElementById('result').innerHTML = tableHTML;
+    }
+
+    // Call the function to generate the table
+    calculateSquaresAndCubes();
+  </script>
+</body>
+</html>
+
+OUTPUT : 
