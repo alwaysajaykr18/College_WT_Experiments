@@ -1,0 +1,328 @@
+// This java program will move the 
+// text using applet
+
+package Applet;
+
+import java.awt.*;
+import java.applet.*;
+
+public class MovingContent extends Applet implements Runnable {
+  // enter message
+  String msg = "Welcome to Includehelp.";
+  Thread t = null;
+
+  // initialize here.
+  int state;
+  boolean stopFlag;
+
+  // Set colors and initialize text..
+  public void init() {
+    setBackground(Color.cyan);
+    setForeground(Color.red);
+  }
+
+  // Start the text....
+  public void start() {
+    t = new Thread(this);
+    stopFlag = false;
+    t.start();
+  }
+
+  // Entry point which runs the text.
+  public void run() {
+    char ch;
+
+    // Display text reapeated times.
+    for (;;) {
+      try {
+        repaint();
+        Thread.sleep(250);
+        ch = msg.charAt(0);
+        msg = msg.substring(1, msg.length());
+        msg += ch;
+        if (stopFlag)
+          break;
+      } catch (InterruptedException e) {
+        System.out.println(e);
+      }
+    }
+  }
+
+  // Pause the text.
+  public void stop() {
+    stopFlag = true;
+    t = null;
+  }
+
+  // Display the text.
+  public void paint(Graphics g) {
+    g.drawString(msg, 50, 30);
+  }
+}
+
+
+SECOND : 
+
+// java program to draw a ellipse
+// using drawLine function
+import java.awt.*;
+import javax.swing.*;
+
+public class ellipse extends JApplet {
+
+	public void init()
+	{
+		setSize(300, 300);
+	}
+
+	public void paint(Graphics g)
+	{
+		// center of the
+		int cx, cy;
+
+		// center of the ellipse
+		cx = 150;
+		cy = 175;
+
+		// major and minor axis
+		double A = 75, B = 50, px = 0, py = 0;
+
+		// set color
+		g.setColor(Color.red);
+
+		// draw the ellipse
+		for (int i = 0; i <= 360; i++) {
+			double x, y;
+			x = A * Math.sin(Math.toRadians(i));
+			y = B * Math.cos(Math.toRadians(i));
+
+			if (i != 0) {
+				// draw a line joining previous and new point .
+				g.drawLine((int)px + cx, (int)py + cy,
+								(int)x + cx, (int)y + cy);
+			}
+
+			// store the previous points
+			px = x;
+			py = y;
+		}
+	}
+}
+
+
+// Java Program to Draw a rectangle
+// using drawRect(int x, int y, int width, int height)
+import java.awt.*;
+import javax.swing.*;
+
+public class rectangle extends JApplet {
+
+	public void init()
+	{
+		// set size
+		setSize(400, 400);
+
+		repaint();
+	}
+
+	// paint the applet
+	public void paint(Graphics g)
+	{
+		// set Color for rectangle
+		g.setColor(Color.red);
+
+		// draw a rectangle
+		g.drawRect(100, 100, 200, 200);
+	}
+}
+
+THIRD : 
+
+// Java program to illustrate 
+// digital clock using Applets 
+
+import java.applet.Applet; 
+import java.awt.*; 
+import java.util.*; 
+
+public class digitalClock extends Applet { 
+
+	@Override
+	public void init() 
+	{ 
+		// Applet window size 
+		this.setSize(new Dimension(800, 400)); 
+		setBackground(Color.white); 
+		new Thread() { 
+			@Override
+			public void run() 
+			{ 
+				while (true) { 
+					repaint(); 
+					delayAnimation(); 
+				} 
+			} 
+		}.start(); 
+	} 
+
+	// Animating the applet 
+	private void delayAnimation() 
+	{ 
+		try { 
+
+			// Animation delay is 1000 milliseconds 
+			Thread.sleep(1000); 
+		} 
+		catch (InterruptedException e) { 
+			e.printStackTrace(); 
+		} 
+	} 
+
+	// Function that receive segment combination value 
+	// for each digit, position of the display 
+	public void display(int val, int pos, Graphics g) 
+	{ 
+
+		// lit-up the i-th segment 
+
+		// 0-th segment 
+		if ((val & 1) != 0) 
+			g.fillRect(pos, 150, 5, 50); 
+
+		// 1-st segment 
+		if ((val & 2) != 0) 
+			g.fillRect(pos, 145, 50, 5); 
+
+		// 2-nd segment 
+		if ((val & 4) != 0) 
+			g.fillRect(pos + 45, 150, 5, 50); 
+
+		// 3-rd segment 
+		if ((val & 8) != 0) 
+			g.fillRect(pos + 45, 200, 5, 50); 
+
+		// 4-th segment 
+		if ((val & 16) != 0) 
+			g.fillRect(pos, 250, 50, 5); 
+
+		// 5-th segment 
+		if ((val & 32) != 0) 
+			g.fillRect(pos, 200, 5, 50); 
+
+		// 6-th segment 
+		if ((val & 64) != 0) 
+			g.fillRect(pos + 5, 200, 40, 5); 
+	} 
+
+	// Paint the applet 
+	@Override
+	public void paint(Graphics g) 
+	{ 
+		// Combination values of different digits 
+		int[] digits 
+			= new int[] { 63, 12, 118, 
+						94, 77, 91, 
+						123, 14, 127, 
+						95 }; 
+
+		// Get the system time 
+		Calendar time = Calendar.getInstance(); 
+
+		int hour = time.get(Calendar.HOUR_OF_DAY); 
+		int minute = time.get(Calendar.MINUTE); 
+		int second = time.get(Calendar.SECOND); 
+
+		// Deciding AM/PM 
+		int am = 1; 
+		if (hour > 12) { 
+			hour -= 12; 
+			am = 0; 
+		} 
+
+		// Display hour 
+
+		// tens digit 
+		display(digits[hour / 10], 150, g); 
+		// units digit 
+		display(digits[hour % 10], 225, g); 
+
+		// Display minute 
+
+		// tens digit 
+		display(digits[minute / 10], 325, g); 
+		// units digit 
+		display(digits[minute % 10], 400, g); 
+
+		// Display second 
+
+		// tens digit 
+		display(digits[second / 10], 500, g); 
+		// units digit 
+		display(digits[second % 10], 575, g); 
+
+		// Display AM/PM 
+		if (am == 1) 
+			g.drawString("am", 650, 250); 
+		else
+			g.drawString("pm", 650, 250); 
+
+		// Display ratio signs 
+		g.fillRect(300, 175, 5, 5); 
+		g.fillRect(300, 225, 5, 5); 
+
+		g.fillRect(475, 175, 5, 5); 
+		g.fillRect(475, 225, 5, 5); 
+	} 
+}
+
+FOURTH :  
+
+// Java Program to implement
+// Java Applet for goto a link
+import java.applet.*;
+import java.awt.*;
+import java.awt.Desktop.*;
+import java.awt.event.*;
+import java.net.*;
+
+// Driver Class
+public class GotoLink
+    extends Applet implements ActionListener {
+    // Function to initialize the applet
+    public void init()
+    {
+        setBackground(Color.white);
+
+        // Button Created
+        Button b1 = new Button("google");
+        Button b2 = new Button("facebook");
+        this.add(b1);
+        this.add(b2);
+
+        // Action Listener to check which option choose
+        b1.addActionListener(this);
+        b2.addActionListener(this);
+    }
+
+    // Function to go to the link
+    public void actionPerformed(ActionEvent e)
+    {
+        String button = e.getActionCommand();
+        String link = "https://www." + button + ".com";
+        try {
+            Desktop.getDesktop().browse(new URI(link));
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+}
+
+/*
+<applet code=GotoLink.class width=400 height=400>
+</applet>
+*/
+
+
+
+
