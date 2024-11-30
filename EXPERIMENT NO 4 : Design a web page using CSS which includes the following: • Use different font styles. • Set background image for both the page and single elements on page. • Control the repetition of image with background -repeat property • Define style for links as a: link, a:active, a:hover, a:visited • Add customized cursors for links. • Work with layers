@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS Internship Roadmap</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #ff6f61; /* Vibrant coral color */
+            --highlight-color: #f39c12; /* Vibrant yellow */
+            --background-overlay: rgba(44, 62, 80, 0.7);
+            --button-bg: #3498db; /* Bright blue for buttons */
+            --button-hover-bg: #2980b9; /* Darker blue for button hover */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            background-image: url('https://example.com/computer-science-background.jpg'), 
+                linear-gradient(var(--background-overlay), var(--background-overlay));
+            background-size: cover;
+            background-position: center;
+            color: white;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            background: linear-gradient(45deg, var(--primary-color), var(--highlight-color));
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+        }
+
+        .internship-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .section {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .section:hover {
+            transform: scale(1.05);
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .section h2 {
+            color: var(--highlight-color);
+            font-size: 1.5rem;
+        }
+
+        .tech-icons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+            opacity: 0.8;
+        }
+
+        .tech-icons img {
+            width: 60px;
+            height: 60px;
+            transition: transform 0.3s;
+        }
+
+        .tech-icons img:hover {
+            transform: scale(1.1);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--button-bg);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 20px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: var(--button-hover-bg);
+        }
+
+        @media (max-width: 768px) {
+            .internship-sections {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>CS Internship Preparation Guide</h1>
+            <p>Essential Roadmap for 3rd Year Computer Science Students</p>
+        </header>
+
+        <div class="internship-sections">
+            <div class="section">
+                <h2>Technical Skills</h2>
+                <p>Focus on programming languages, frameworks, and technologies in demand.</p>
+                <div class="tech-icons">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cGF0aCBkPSJNNTAgMTBsNDAgNzBoLTgweiIgZmlsbD0iIzYxREFGRiIvPjwvc3ZnPg==" alt="Python">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cGF0aCBkPSJNNTAgMTBsMzAgNjBoLTYweiIgZmlsbD0iIzJERkY0RiIvPjwvc3ZnPg==" alt="JavaScript">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cGF0aCBkPSJNNTAgMTBsMjAgNzBoLTQweiIgZmlsbD0iI0ZGNkQ0RiIvPjwvc3ZnPg==" alt="React">
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Portfolio Development</h2>
+                <p>Create projects that showcase your skills and problem-solving abilities.</p>
+                <a href="#" class="cta-button">Start Building</a>
+            </div>
+
+            <div class="section">
+                <h2>Networking</h2>
+                <p>Connect with professionals, attend tech events, and leverage LinkedIn.</p>
+                <a href="#" class="cta-button">Connect Now</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+OUTPUT : csinternshipguidence.netlify.app
